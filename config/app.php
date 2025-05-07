@@ -6,7 +6,7 @@
 
 
 	/*----------  Zona horaria  ----------*/
-	date_default_timezone_set("America/El_Salvador");
+
 
 	/*
 		Configuración de zona horaria de tu país, para más información visita

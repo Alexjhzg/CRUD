@@ -8,11 +8,11 @@
 		/*----------  Controlador iniciar sesion  ----------*/
 		public function iniciarSesionControlador(){
 
-			$usuario=$this->limpiarCadena($_POST['login_usuario']);
-		    $clave=$this->limpiarCadena($_POST['login_clave']);
+			$cedula=$this->limpiarCadena($_POST['login_cedula']);
+		    $password=$this->limpiarCadena($_POST['login_password']);
 
 		    # Verificando campos obligatorios #
-		    if($usuario=="" || $clave==""){
+		    if($cedula=="" || $password==""){
 		        echo "<script>
 			        Swal.fire({
 					  icon: 'error',
@@ -21,37 +21,39 @@
 					});
 				</script>";
 		    }else{
-
-			    # Verificando integridad de los datos #
-			    if($this->verificarDatos("[a-zA-Z0-9]{4,20}",$usuario)){
+			    # Verificando integridad de los datos de cedula#
+			    if($this->verificarDatos("[0-9]{1,8}",$cedula)){
 			        echo "<script>
 				        Swal.fire({
 						  icon: 'error',
 						  title: 'Ocurrió un error inesperado',
-						  text: 'El USUARIO no coincide con el formato solicitado'
+						  text: 'La CEDULA no coincide con el formato solicitado'
 						});
 					</script>";
 			    }else{
-
-			    	# Verificando integridad de los datos #
-				    if($this->verificarDatos("[a-zA-Z0-9$@.-]{7,100}",$clave)){
+					// cambiar por formato a conveniencia 
+			    	# Verificando integridad de los datos de la contraseña#
+				    if($this->verificarDatos("[a-zA-Z0-9$@.-]{7,100}",$password)){
 				        echo "<script>
 					        Swal.fire({
 							  icon: 'error',
 							  title: 'Ocurrió un error inesperado',
-							  text: 'La CLAVE no coincide con el formato solicitado'
+							  text: 'La CONTRASEÑA no coincide con el formato solicitado'
 							});
 						</script>";
 				    }else{
 
-					    # Verificando usuario #
-					    $check_usuario=$this->ejecutarConsulta("SELECT * FROM usuario WHERE usuario_usuario='$usuario'");
+					    # Verificando cedula empleado #
+					    $check_cedula=$this->ejecutarConsulta("SELECT * FROM e
+						
+						
+						mpleado WHERE cedula='$cedula'");
 
-					    if($check_usuario->rowCount()==1){
+					    if($check_cedula->rowCount()==1){
 
-					    	$check_usuario=$check_usuario->fetch();
+					    	$check_cedula=$check_cedula->fetch();
 
-					    	if($check_usuario['usuario_usuario']==$usuario && password_verify($clave,$check_usuario['usuario_clave'])){
+					    	if($check_cedula['cedula']==$cedula && password_verify($password,$check_cedula['usuario_password'])){
 
 					    		$_SESSION['id']=$check_usuario['usuario_id'];
 					            $_SESSION['nombre']=$check_usuario['usuario_nombre'];
@@ -71,7 +73,7 @@
 							        Swal.fire({
 									  icon: 'error',
 									  title: 'Ocurrió un error inesperado',
-									  text: 'Usuario o clave incorrectos'
+									  text: 'Cedula o Contraseña Incorrectos'
 									});
 								</script>";
 					    	}
@@ -81,7 +83,7 @@
 						        Swal.fire({
 								  icon: 'error',
 								  title: 'Ocurrió un error inesperado',
-								  text: 'Usuario o clave incorrectos'
+								  text: 'Cedula o Contraseña Incorrectos'
 								});
 							</script>";
 					    }

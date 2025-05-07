@@ -1,31 +1,43 @@
-<div class="main-container">
+<?php include('app/views/inc/head.php');  ?>
 
-    <form class="box login" action="" method="POST" autocomplete="off" >
-		<h5 class="title is-5 has-text-centered is-uppercase">LOGIN</h5>
 
-		<div class="field">
-			<label class="label">Usuario</label>
-			<div class="control">
-			    <input class="input" type="text" name="login_usuario" pattern="[a-zA-Z0-9]{4,20}" maxlength="20" required >
-			</div>
-		</div>
+<div class="container">
+    <div class="login-container">
+        <div class="login-header">
+            <img src="app/views/img/ine_logo_fondo_blanco.png" alt="Logo INE">
+            <h3>Iniciar Sesión</h3>
+            <p class="text-muted">Ingresa tus credenciales para continuar</p>
+        </div>
 
-		<div class="field">
-		  	<label class="label">Clave</label>
-		  	<div class="control">
-		    	<input class="input" type="password" name="login_clave" pattern="[a-zA-Z0-9$@.-]{7,100}" maxlength="100" required >
-		  	</div>
-		</div>
+        <form class="box login" action="" method="POST" autocomplete="off">
 
-		<p class="has-text-centered mb-4 mt-3">
-			<button type="submit" class="button is-info is-rounded">Iniciar sesion</button>
-		</p>
+            <div class="mb-3">
 
-	</form>
+                <div class="control">
+                    <label class="form-label">Cédula de Identidad</label>
+                    <input type="number" class="form-control" id="cedula" name="login_cedula"
+                        placeholder="Ingresar Cédula de Identidad" maxlength="10" required>
+                </div>
+
+
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="password" name="login_clave"
+                    pattern="[a-zA-Z0-9$@.-]{7,100}" maxlength="20" placeholder="Ingresa tu contraseña" required>
+            </div>
+
+                <button type="submit" class="btn btn-primary btn-login">Iniciar sesion</button>
+
+        </form>
+    </div>
+
 </div>
 
 <?php
-	if(isset($_POST['login_usuario']) && isset($_POST['login_clave'])){
+	if(isset($_POST['login_cedula']) && isset($_POST['login_password'])){
 		$insLogin->iniciarSesionControlador();
 	}
 ?>
+
