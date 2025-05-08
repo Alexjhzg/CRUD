@@ -16,7 +16,7 @@
                 <div class="control">
                     <label class="form-label">Cédula de Identidad</label>
                     <input type="number" class="form-control" id="cedula" name="login_cedula"
-                        placeholder="Ingresar Cédula de Identidad" maxlength="10" required>
+                        placeholder="Ingresar Cédula de Identidad" pattern="[0-9]{1,8}"  maxlength="8" required>
                 </div>
 
 
@@ -24,8 +24,8 @@
 
             <div class="mb-3">
                 <label class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="password" name="login_clave"
-                    pattern="[a-zA-Z0-9$@.-]{7,100}" maxlength="20" placeholder="Ingresa tu contraseña" required>
+                <input type="password" class="form-control" id="password" name="login_password"
+                    pattern="[a-zA-Z0-9$@.-]{7,20}" maxlength="20" placeholder="Ingresa tu contraseña" required>
             </div>
 
                 <button type="submit" class="btn btn-primary btn-login">Iniciar sesion</button>

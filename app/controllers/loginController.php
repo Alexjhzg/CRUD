@@ -31,9 +31,9 @@
 						});
 					</script>";
 			    }else{
-					// cambiar por formato a conveniencia 
+					
 			    	# Verificando integridad de los datos de la contraseña#
-				    if($this->verificarDatos("[a-zA-Z0-9$@.-]{7,100}",$password)){
+				    if($this->verificarDatos("[a-zA-Z0-9$@.-]{7,20}",$password)){
 				        echo "<script>
 					        Swal.fire({
 							  icon: 'error',
@@ -44,22 +44,18 @@
 				    }else{
 
 					    # Verificando cedula empleado #
-					    $check_cedula=$this->ejecutarConsulta("SELECT * FROM e
-						
-						
-						mpleado WHERE cedula='$cedula'");
+					    $check_empleado=$this->ejecutarConsulta("SELECT * FROM empleado WHERE cedula='$cedula'");
 
-					    if($check_cedula->rowCount()==1){
+					    if($check_empleado->rowCount()==1){
 
-					    	$check_cedula=$check_cedula->fetch();
+					    	$empleado = $check_empleado->fetch();
 
-					    	if($check_cedula['cedula']==$cedula && password_verify($password,$check_cedula['usuario_password'])){
-
-					    		$_SESSION['id']=$check_usuario['usuario_id'];
-					            $_SESSION['nombre']=$check_usuario['usuario_nombre'];
-					            $_SESSION['apellido']=$check_usuario['usuario_apellido'];
-					            $_SESSION['usuario']=$check_usuario['usuario_usuario'];
-					            $_SESSION['foto']=$check_usuario['usuario_foto'];
+					    	if($empleado['cedula'] == $cedula && $password == $empleado['password']){
+								
+								$_SESSION['cedula'] = $empleado['cedula'];
+								$_SESSION['nombre'] = $empleado['nombre'];         
+								$_SESSION['apellido'] = $empleado['apellido'];      
+								$_SESSION['nivel_usuario'] = $empleado['nivel_usuario'];
 
 
 					            if(headers_sent()){
@@ -73,7 +69,7 @@
 							        Swal.fire({
 									  icon: 'error',
 									  title: 'Ocurrió un error inesperado',
-									  text: 'Cedula o Contraseña Incorrectos'
+									  text: 'Cedula o Contraseña Incorrectos 1'
 									});
 								</script>";
 					    	}
@@ -83,7 +79,7 @@
 						        Swal.fire({
 								  icon: 'error',
 								  title: 'Ocurrió un error inesperado',
-								  text: 'Cedula o Contraseña Incorrectos'
+								  text: 'Cedula o Contraseña Incorrectos 2'
 								});
 							</script>";
 					    }
@@ -98,11 +94,11 @@
 
 			session_destroy();
 
-		    if(headers_sent()){
-                echo "<script> window.location.href='".APP_URL."login/'; </script>";
-            }else{
-                header("Location: ".APP_URL."login/");
-            }
+		    if (headers_sent()) {
+				echo "<script> window.location.href='" . APP_URL . "login/'; </script>";
+			} else {
+				header("Location: " . APP_URL . "login/");
+			}
 		}
 
 	}
